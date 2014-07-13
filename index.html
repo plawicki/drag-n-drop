@@ -41,7 +41,7 @@
 	    $( "[draggable]" ).draggable({
 	      	connectToSortable: ".sortable",
 	      	helper: function(e){
-	      		return $($(this).clone().height("128px").width("128px"));
+	      		return $($(this).clone().height($(this).height()).width($(this).width()));
 	      	}
 	    });
 
