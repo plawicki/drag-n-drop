@@ -1,0 +1,134 @@
+<html>
+<head>
+	<title>Drag n Drop</title>
+	<script type="text/javascript" src="jquery-2.1.1.min.js"></script>
+	<script type="text/javascript" src="jquery-ui.min.js"></script>
+	<script type="text/javascript">
+
+	function getRandomColor() {
+	    var letters = '0123456789ABCDEF'.split('');
+	    var color = '#';
+	    for (var i = 0; i < 6; i++ ) {
+	        color += letters[Math.floor(Math.random() * 16)];
+	    }
+	    return color;
+	}
+
+	$(function() {
+		// randomize colors for draggable divs
+		$.each($('[draggable]'), function(i, el){
+			el.style.backgroundColor = getRandomColor();
+		});
+
+		// jQueryUI 
+	    $( ".sortable" ).sortable({ 
+        	connectWith: ".sortable" 
+        });
+
+	    $( "#draggable" ).draggable({
+	      	connectToSortable: ".sortable",
+	      	revert: true,
+	    });
+
+	    // end jQueryUI
+
+	    // events
+	    
+	    $( ".button" ).click(function(){
+	    	$(this).parent().remove();
+	    });
+
+	    $( "[draggable]" ).mouseover(function(){
+	    	$(this).find('.button').show();
+	    });
+	    $( "[draggable]" ).mouseout(function(){
+	    	$(this).find('.button').hide();
+	    });
+
+	    $( "div" ).disableSelection();
+
+	    // deleting first draggable div due to the jQueryUI bug
+	    $(".first").remove();
+	});
+	</script>
+	<style>
+		body{
+			font-family: Helvetica, sans-serif;
+			color: #FE7E7D;
+		}
+		.fifty{
+			width: 20%;
+			min-height: 100%;
+
+			margin-left: 10%;
+			margin-right: 10%;
+
+			padding-left: 5%;
+			padding-right: 5%;
+
+			margin-top: 3%;
+
+			float: left;
+
+			background-color: #EEEEEE;
+
+			text-align: center;
+		}
+		.fifty h1, h2{
+			font-size: 100px;
+			margin-top: 5%;
+			margin-bottom: 5%;
+		}
+		.fifty h2{
+			font-size: 60px;
+		}
+		.sortable{
+			min-height: 100%;
+		}
+		.list #draggable{
+			width: 100%;
+			min-height: 50px;
+		}
+		div[draggable]{
+			display: inline-block; 
+			position: relative; 
+			margin: 5px 5px 5px 5px; 
+
+			min-height: 128px; 
+			min-width: 128px; 
+		}
+		.list #draggable .button{
+			width: 32px;
+			height: 32px;
+			float: right;
+
+			background-image: url('./xbutton.png');
+		}
+	</style>
+</head>
+<body>
+
+	<div class="fifty">
+		<h1>DIV</h1>
+		<div class="sortable" >
+			<div draggable id="draggable" class="ui-state-default first"><div class="button" hidden></div></div>
+
+			<div draggable id="draggable" class="ui-state-default"><div class="button" hidden></div></div>
+			<div draggable id="draggable" class="ui-state-default"><div class="button" hidden></div></div>
+			<div draggable id="draggable" class="ui-state-default"><div class="button" hidden></div></div>
+			<div draggable id="draggable" class="ui-state-default"><div class="button" hidden></div></div>
+			<div draggable id="draggable" class="ui-state-default"><div class="button" hidden></div></div>
+
+		</div>
+	</div>
+		<div class="fifty">
+		<h2>DIV DROP</h2>
+		<div class="sortable list" >
+			<div draggable id="draggable" class="ui-state-default first"><div class="button" hidden></div></div>
+
+			<div draggable id="draggable" class="ui-state-default"><div class="button" hidden></div></div>
+			<div draggable id="draggable" class="ui-state-default"><div class="button" hidden></div></div>
+		</div>
+	</div>
+</body>
+</html>
