@@ -59,6 +59,10 @@
 	    	$(this).parent().remove();
 	    }
 
+	    $( '#delete').click(function(e){
+	    	$(this).parent().find('.sortable').empty();
+	    })
+
 	    $( "div" ).disableSelection();
 	});
 	</script>
@@ -135,6 +139,7 @@
 	</div>
 		<div class="fifty">
 		<h2>DIV DROP</h2>
+		<div id="delete">Delete all</div><br><br>
 		<div class="sortable list" >
 
 		</div>
