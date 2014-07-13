@@ -40,7 +40,9 @@
 
 	    $( "[draggable]" ).draggable({
 	      	connectToSortable: ".sortable",
-	      	helper: "clone",
+	      	helper: function(e){
+	      		return $($(this).clone().height("128px").width("128px"));
+	      	}
 	    });
 
 	    // end jQueryUI
