@@ -1,8 +1,8 @@
 <html>
 <head>
 	<title>Drag n Drop</title>
-	<script type="text/javascript" src="jquery-1.8.3.js"></script>
-	<script type="text/javascript" src="jquery-ui-1.9.2.min.js"></script>
+	<script type="text/javascript" src="jquery.js"></script>
+	<script type="text/javascript" src="jquery-ui.min.js"></script>
 	<script type="text/javascript">
 
 	function getRandomColor() {
@@ -22,13 +22,23 @@
 
 		// jQueryUI 
 	    $( ".sortable" ).sortable({ 
-        	connectWith: ".sortable"
+        	connectWith: ".origin",
+        	stop: function(e, ui){
+        		$(ui.item).mouseover(mouseover);
+        		$(ui.item).mouseout(mouseout);
+        		$(ui.item).find('.button').click(click);
+        		$(ui.item).find('.button').hide();
+        	}
+        });
+
+        $( ".origin" ).droppable({ 
+        	accept: '.list div[draggable]',
+        	drop: function(e, ui){
+        		$(ui.draggable).remove();
+        	}
         });
 
 	    $( "[draggable]" ).draggable({
-	    	start: function(event, ui){
-	    		console.log("starting");
-	    	},
 	      	connectToSortable: ".sortable",
 	      	helper: "clone",
 	    });
@@ -37,16 +47,17 @@
 
 	    // events
 	    
-	    $( ".button" ).click(function(){
-	    	$(this).parent().remove();
-	    });
-
-	    $( "[draggable]" ).mouseover(function(){
+	    var mouseover = function(){
 	    	$(this).find('.button').show();
-	    });
-	    $( "[draggable]" ).mouseout(function(){
+	    }
+
+	    var mouseout = function(){
 	    	$(this).find('.button').hide();
-	    });
+	    }
+
+	    var click = function(){
+	    	$(this).parent().remove();
+	    }
 
 	    $( "div" ).disableSelection();
 	});
@@ -86,7 +97,7 @@
 			height: 100%;
 			min-height: 100%;
 		}
-		.list #draggable{
+		.list div[draggable]{
 			width: 100%;
 			min-height: 50px;
 		}
@@ -98,7 +109,7 @@
 			min-height: 128px; 
 			min-width: 128px; 
 		}
-		.list #draggable .button{
+		.list div[draggable] .button{
 			width: 32px;
 			height: 32px;
 			float: right;
@@ -111,24 +122,21 @@
 
 	<div class="fifty">
 		<h1>DIV</h1>
-		<div class="sortable" >
-			<div draggable id="draggable" class="ui-state-default first"><div class="button" hidden></div></div>
+		<div class="origin" >
+			<div draggable id="draggable" class="ui-state-default first"><div class="button" ></div></div>
 
-			<div draggable id="draggable" class="ui-state-default"><div class="button" hidden></div></div>
-			<div draggable id="draggable" class="ui-state-default"><div class="button" hidden></div></div>
-			<div draggable id="draggable" class="ui-state-default"><div class="button" hidden></div></div>
-			<div draggable id="draggable" class="ui-state-default"><div class="button" hidden></div></div>
-			<div draggable id="draggable" class="ui-state-default"><div class="button" hidden></div></div>
+			<div draggable id="draggable" class="ui-state-default"><div class="button" ></div></div>
+			<div draggable id="draggable" class="ui-state-default"><div class="button" ></div></div>
+			<div draggable id="draggable" class="ui-state-default"><div class="button" ></div></div>
+			<div draggable id="draggable" class="ui-state-default"><div class="button" ></div></div>
+			<div draggable id="draggable" class="ui-state-default"><div class="button" ></div></div>
 
 		</div>
 	</div>
 		<div class="fifty">
 		<h2>DIV DROP</h2>
 		<div class="sortable list" >
-			<div draggable id="draggable" class="ui-state-default first"><div class="button" hidden></div></div>
 
-			<div draggable id="draggable" class="ui-state-default"><div class="button" hidden></div></div>
-			<div draggable id="draggable" class="ui-state-default"><div class="button" hidden></div></div>
 		</div>
 	</div>
 </body>
